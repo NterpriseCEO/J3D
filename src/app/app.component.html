@@ -1,0 +1,14 @@
+<p-splitter [style]="{ height: '100vh' }" [panelSizes]="[15, 85]">
+	<ng-template #panel>
+		<app-object-importer class = "block h-full w-full"></app-object-importer>
+	</ng-template>
+	<ng-template #panel>
+		<p-splitter [style]="{ height: '100vh' }" [panelSizes]="[70, 30]" layout="vertical">
+			<ng-template #panel>
+				<app-scene-viewer class = "block h-full w-full overflow-hidden"></app-scene-viewer>
+			</ng-template>
+			<ng-template #panel>
+			</ng-template>
+		</p-splitter>
+	</ng-template>
+</p-splitter>

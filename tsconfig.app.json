@@ -1,0 +1,27 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": [],
+    "strict": true,
+	"noImplicitOverride": true,
+	"noPropertyAccessFromIndexSignature": true,
+	"noImplicitReturns": true,
+	"noFallthroughCasesInSwitch": true,
+	"skipLibCheck": true,
+	"isolatedModules": true,
+	"esModuleInterop": true,
+	"experimentalDecorators": true,
+	"moduleResolution": "bundler",
+	"importHelpers": true,
+	"target": "ES2022",
+	"module": "ES2022"
+  },
+  "files": [
+    "src/main.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}
