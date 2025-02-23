@@ -1,0 +1,16 @@
+::ng-deep {
+
+	& .p-tab {
+		padding: 1rem !important;
+	}
+
+	& .p-tabpanels {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+
+	& .p-dataview-header {
+		padding: 0 !important;
+		padding-bottom: 0.875rem !important;
+	}
+}

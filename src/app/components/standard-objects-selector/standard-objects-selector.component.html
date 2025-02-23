@@ -1,0 +1,76 @@
+<p-tabs value = "0">
+	<p-tablist>
+		<p-tab value = "0">Objects</p-tab>
+		<p-tab value = "1">Lights</p-tab>
+	</p-tablist>
+	<p-tabpanels>
+		<p-tabpanel value = "0">
+			<p-dataview
+				#dvo
+				[value] = "getNames(objectTypes)"
+				layout = "grid"
+				class = "block h-full"
+				styleClass = "h-full"
+				filterBy = "type"
+			>
+				<ng-template #header>
+					<input
+						type = "text"
+						pInputText
+						class = "w-full"
+						placeholder = "Search for shapes"
+						(keyup) = "filter(dvo, $event)"
+					>
+				</ng-template>
+				<ng-template #grid let-objects>
+					<div class = "grid grid-cols-12 gap-3">
+						<div
+							*ngFor = "let object of objects; let first = first"
+							class = "flex cursor-pointer w-3 p-3"
+							(click) = "addObject(object.type, objectTypes)"
+						>
+							{{object.type}}
+						</div>
+					</div>
+				</ng-template>
+				<ng-template #emptymessage>
+					<span class = "inline-block w-full text-center p-2">No results</span>
+				</ng-template>
+			</p-dataview>
+		</p-tabpanel>
+		<p-tabpanel value = "1">
+			<p-dataview
+				#dvl
+				[value] = "getNames(lightTypes)"
+				layout = "grid"
+				class = "block h-full"
+				styleClass = "h-full"
+				filterBy = "type"
+			>
+				<ng-template #header>
+					<input
+						type = "text"
+						pInputText
+						class = "w-full"
+						placeholder = "Search for shapes"
+						(keyup) = "filter(dvo, $event)"
+					>
+				</ng-template>
+				<ng-template #grid let-lights>
+					<div class = "grid grid-cols-12 gap-3">
+						<div
+							*ngFor = "let light of lights; let first = first"
+							class = "flex cursor-pointer w-3 p-3"
+							(click) = "addObject(light.type, lightTypes)"
+						>
+							{{light.type}}
+						</div>
+					</div>
+				</ng-template>
+				<ng-template #emptymessage>
+					<span class = "inline-block w-full text-center p-2">No results</span>
+				</ng-template>
+			</p-dataview>
+		</p-tabpanel>
+	</p-tabpanels>
+</p-tabs>

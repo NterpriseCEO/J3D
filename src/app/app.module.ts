@@ -4,25 +4,27 @@ import { SplitterModule } from 'primeng/splitter';
 import Aura from '@primeng/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { DataViewModule } from 'primeng/dataview';
+import { FormsModule } from '@angular/forms';
+import { AccordionModule } from 'primeng/accordion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ObjectImporterComponent } from './components/object-importer/object-importer.component';
-import { FormsModule } from '@angular/forms';
-import { SceneViewerComponent } from './components/scene-viewer/scene-viewer.component';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
 	declarations: [
-		AppComponent,
-		ObjectImporterComponent,
-		SceneViewerComponent
+		AppComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		FormsModule,
 		SplitterModule,
-		DataViewModule
+		DataViewModule,
+		AccordionModule,
+		BrowserAnimationsModule,
+		ComponentsModule
 	],
 	providers: [
 		providePrimeNG({

@@ -1,8 +1,30 @@
+@import "./assets/inter.scss";
+
 body {
 	padding: 0;
 	margin: 0;
+	font-family: InterVariable;
 }
 
 .p-splitter {
 	border-radius: 0 !important;
+}
+
+.p-accordionheader {
+	min-height: fit-content !important;
+}
+
+.p-accordionpanel {
+	min-height: fit-content;
+	overflow: hidden;
+}
+
+.p-accordionpanel-active {
+	min-height: unset;
+	flex-grow: 1;
+}
+
+.p-accordioncontent {
+	flex-grow: 1;
+	overflow: auto !important;
 }

@@ -1,9 +1,23 @@
-<p-splitter [style]="{ height: '100vh' }" [panelSizes]="[15, 85]">
+<p-splitter [style] = "{ height: '100vh' }" [panelSizes]="[15, 85]">
 	<ng-template #panel>
-		<app-object-importer class = "block h-full w-full"></app-object-importer>
+		<p-accordion value = "0" class = "flex flex-column h-full w-full overflow-hidden">
+			<p-accordion-panel value = "0">
+				<p-accordion-header>Standard Objects</p-accordion-header>
+				<p-accordion-content class = "overflow-auto">
+					<app-standard-objects-selector class="block h-full w-full"></app-standard-objects-selector>
+				</p-accordion-content>
+			</p-accordion-panel>
+		
+			<p-accordion-panel value = "1">
+				<p-accordion-header>Import Objects</p-accordion-header>
+				<p-accordion-content>
+					<app-object-importer class = "block h-full w-full"></app-object-importer>
+				</p-accordion-content>
+			</p-accordion-panel>
+		</p-accordion>
 	</ng-template>
 	<ng-template #panel>
-		<p-splitter [style]="{ height: '100vh' }" [panelSizes]="[70, 30]" layout="vertical">
+		<p-splitter [style] = "{ height: '100vh' }" [panelSizes] = "[70, 30]" layout = "vertical">
 			<ng-template #panel>
 				<app-scene-viewer class = "block h-full w-full overflow-hidden"></app-scene-viewer>
 			</ng-template>
