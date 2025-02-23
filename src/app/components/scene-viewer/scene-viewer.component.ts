@@ -1,12 +1,10 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { AxesViewer, Color3, CreateBox, CreateSphere, Engine, GizmoManager, HemisphericLight, Material, PointLight, Scene, StandardMaterial, UniversalCamera, Vector3 } from '@babylonjs/core';
-import { AdvancedDynamicTexture, Rectangle, TextBlock } from "@babylonjs/gui";
-import { SetService } from 'src/app/services/set.service';
+import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { SetService } from "src/app/services/set.service";
 
 @Component({
-	selector: 'app-scene-viewer',
-	templateUrl: './scene-viewer.component.html',
-	styleUrl: './scene-viewer.component.scss',
+	selector: "app-scene-viewer",
+	templateUrl: "./scene-viewer.component.html",
+	styleUrl: "./scene-viewer.component.scss",
 	standalone: false
 })
 export class SceneViewerComponent implements AfterViewInit {

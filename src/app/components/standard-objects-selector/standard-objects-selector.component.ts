@@ -1,19 +1,19 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DataView } from 'primeng/dataview';
-import { PointLight } from 'src/app/classes/objects/lights/PointLight/PointLight';
-import { Capsule } from 'src/app/classes/objects/shapes/capsule/Capsule';
-import { Cube } from 'src/app/classes/objects/shapes/cube/Cube';
-import { Cylinder } from 'src/app/classes/objects/shapes/cylinder/Cylinder';
-import { Disc } from 'src/app/classes/objects/shapes/disc/Disc';
-import { Plane } from 'src/app/classes/objects/shapes/plane/Plane';
-import { Sphere } from 'src/app/classes/objects/shapes/sphere/Sphere';
-import { Torus } from 'src/app/classes/objects/shapes/torus/Torus';
-import { SetService } from 'src/app/services/set.service';
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { DataView } from "primeng/dataview";
+import { PointLight } from "src/app/classes/objects/lights/PointLight/PointLight";
+import { Capsule } from "src/app/classes/objects/shapes/capsule/Capsule";
+import { Cube } from "src/app/classes/objects/shapes/cube/Cube";
+import { Cylinder } from "src/app/classes/objects/shapes/cylinder/Cylinder";
+import { Disc } from "src/app/classes/objects/shapes/disc/Disc";
+import { Plane } from "src/app/classes/objects/shapes/plane/Plane";
+import { Sphere } from "src/app/classes/objects/shapes/sphere/Sphere";
+import { Torus } from "src/app/classes/objects/shapes/torus/Torus";
+import { SetService } from "src/app/services/set.service";
 
 @Component({
-	selector: 'app-standard-objects-selector',
-	templateUrl: './standard-objects-selector.component.html',
-	styleUrl: './standard-objects-selector.component.scss',
+	selector: "app-standard-objects-selector",
+	templateUrl: "./standard-objects-selector.component.html",
+	styleUrl: "./standard-objects-selector.component.scss",
 	standalone: false,
 	changeDetection: ChangeDetectionStrategy.OnPush
 })

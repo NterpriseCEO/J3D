@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-	selector: 'app-object-importer',
-	templateUrl: './object-importer.component.html',
-	styleUrl: './object-importer.component.scss',
+	selector: "app-object-importer",
+	templateUrl: "./object-importer.component.html",
+	styleUrl: "./object-importer.component.scss",
 	standalone: false
 })
 export class ObjectImporterComponent {

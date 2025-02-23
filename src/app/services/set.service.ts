@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { EnvironmentSet } from '../classes/EnvironmentSet';
-import { SetObject } from '../classes/objects/shapes/Object';
+import { Injectable } from "@angular/core";
+import { EnvironmentSet } from "../classes/EnvironmentSet";
+import { SetObject } from "../classes/objects/shapes/Object";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root"
 })
 export class SetService {
 
