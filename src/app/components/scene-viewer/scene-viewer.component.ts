@@ -20,7 +20,6 @@ export class SceneViewerComponent implements AfterViewInit {
 			const componentDimensions = this.canvasWrapper.nativeElement.getBoundingClientRect();
 			canvas.width = componentDimensions.width;
 			canvas.height = componentDimensions.height;
-			console.log(componentDimensions)
 		}).observe(this.canvasWrapper.nativeElement);
 
 		this.setService.createSet(canvas);

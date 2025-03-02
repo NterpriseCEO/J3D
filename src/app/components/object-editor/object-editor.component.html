@@ -1,0 +1,65 @@
+<div class = "border-bottom-1 surface-border flex flex-row-reverse mb-2 px-2">
+	<p-button
+		icon = "pi pi-times"
+		[rounded] = "true"
+		[text] = "true"
+		(click) = "deselectObject()"
+	/>
+</div>
+<div class = "px-4">
+	<ng-container
+		*ngIf = "model"
+		[ngTemplateOutlet] = "object"
+		[ngTemplateOutletContext] = "{
+			subSchema: schema.properties,
+			model: model,
+			path: path
+		}"
+	>
+	</ng-container>
+</div>
+
+<ng-template #object let-subSchema = "subSchema" let-subSchemaModel = "model" let-currentPath = "path">
+	<ng-container *ngFor = "let property of subSchema | keyvalue ">
+		@let fullPath = generatePath(currentPath, getProperty(property.key));
+		<div class = "flex gap-3 w-full align-items-center py-2 overflow-hidden">
+			<div
+				*ngIf = "getProperty(property.value).type !== 'object'"
+				class = "font-bold"
+			>
+				{{ getProperty(property.value).name }}
+			</div>
+			<div class = "flex-grow-1 overflow-hidden">
+				<ng-container *ngIf = "getProperty(property.value).type === 'string'">
+					<input
+						type = "text"
+						pInputText class = "w-full"
+						[ngModel] = "subSchemaModel[getProperty(property).key]"
+						(ngModelChange) = "updateObject(fullPath, $event)"
+					>
+				</ng-container>
+				<ng-container *ngIf = "getProperty(property.value).type === 'number'">
+					<p-inputnumber
+						class = "block w-full"
+						inputStyleClass = "w-full"
+						[(ngModel)] = "subSchemaModel[getProperty(property).key]"
+						(ngModelChange) = "updateObject(fullPath, $event)"
+					/>
+				</ng-container>
+				<div *ngIf = "getProperty(property.value).type === 'object'">
+					@let key = getProperty(property.key);
+					@let value = getProperty(property.value);
+					<p-fieldset [legend] = "value.name">
+						<ng-container [ngTemplateOutlet] = "object"
+							[ngTemplateOutletContext] = "{
+								subSchema: value.properties,
+								model: subSchemaModel?.[key],
+								path: fullPath
+							}">
+						</ng-container>
+					</p-fieldset>
+				</div>
+			</div>
+		</div>
+	</ng-container>
+</ng-template>

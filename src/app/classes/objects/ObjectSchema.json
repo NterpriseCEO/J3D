@@ -1,0 +1,87 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "",
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string",
+			"name": "Name",
+			"minLength": 1
+		},
+		"position": {
+			"type": "object",
+			"name": "Position",
+			"properties": {
+				"x": {
+					"name": "X",
+					"type": "number"
+				},
+				"y": {
+					"name": "Y",
+					"type": "number"
+				},
+				"z": {
+					"name": "Z",
+					"type": "number"
+				}
+			},
+			"required": [
+				"x",
+				"y",
+				"z"
+			]
+		},
+		"rotation": {
+			"name": "Rotation",
+			"type": "object",
+			"properties": {
+				"x": {
+					"name": "X",
+					"type": "number"
+				},
+				"y": {
+					"name": "Y",
+					"type": "number"
+				},
+				"z": {
+					"name": "Z",
+					"type": "number"
+				}
+			},
+			"required": [
+				"x",
+				"y",
+				"z"
+			]
+		},
+		"scale": {
+			"type": "object",
+			"name": "Scale",
+			"properties": {
+				"x": {
+					"name": "X",
+					"type": "number"
+				},
+				"y": {
+					"name": "Y",
+					"type": "number"
+				},
+				"z": {
+					"name": "Z",
+					"type": "number"
+				}
+			},
+			"required": [
+				"x",
+				"y",
+				"z"
+			]
+		}
+	},
+	"required": [
+		"name",
+		"position",
+		"scale",
+		"rotation"
+	]
+}

@@ -1,4 +1,8 @@
-<p-splitter [style] = "{ height: '100vh' }" [panelSizes] = "[15, 85]">
+<p-splitter
+	#splitter
+	[style] = "{ height: '100vh' }"
+	[panelSizes] = "[15, 70, 15]"
+>
 	<ng-template #panel>
 		<p-accordion value = "0" class = "flex flex-column h-full w-full overflow-hidden">
 			<p-accordion-panel value = "0">
@@ -24,5 +28,11 @@
 			<ng-template #panel>
 			</ng-template>
 		</p-splitter>
+	</ng-template>
+	<ng-template #panel>
+		<app-object-editor
+			class = "block w-full"
+		>
+		</app-object-editor>
 	</ng-template>
 </p-splitter>

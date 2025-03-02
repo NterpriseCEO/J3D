@@ -1,53 +1,87 @@
 import { AdvancedDynamicTexture, Rectangle, TextBlock } from "@babylonjs/gui";
 import { EnvironmentSet } from "../../EnvironmentSet";
-import { Color3, CreateSphere, Mesh, StandardMaterial } from "@babylonjs/core";
+import { Color3, CreateSphere, Mesh, StandardMaterial, Vector3 } from "@babylonjs/core";
+import { BaseObject } from "../BaseObject";
 
-export class LightObject {
+export class LightObject extends BaseObject {
 
-	set: EnvironmentSet;
-	setObject: any;
-	rect!: Rectangle;
+	override setObject: any;
+	rect: Rectangle = new Rectangle();
+	text: TextBlock = new TextBlock();
 	lightSphere!: Mesh;
 
-
 	constructor(set: EnvironmentSet) {
-		this.set = set;
+		super(set);
 		this.initObject();
+		super.initObject();
 	}
 
-	initObject() {
-		const lightSphere = CreateSphere("lightSphere", { diameter: 1 }, this.set.scene);
-		lightSphere.position = this.setObject.position;
+	override initObject() {
+		this.lightSphere = CreateSphere(this.name + "_lightSphere", { diameter: 1 }, this.set.scene);
+		this.lightSphere.position = this.setObject.position;
 		const material = new StandardMaterial("light");
 		material.emissiveColor = new Color3(1, 1, 1);
-		lightSphere.material = material;
+		this.lightSphere.material = material;
 
 		const advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI");
 		advancedTexture.renderScale = 1;
 
 		// Create a Rectangle for the label
-		const rect = new Rectangle();
-		rect.width = "200px";
-		rect.height = "40px";
-		rect.cornerRadius = 10;
-		rect.color = "White";
-		rect.thickness = 2;
-		rect.background = "black";
-		advancedTexture.addControl(rect);
+		this.rect.width = "200px";
+		this.rect.height = "40px";
+		this.rect.cornerRadius = 10;
+		this.rect.color = "White";
+		this.rect.thickness = 2;
+		this.rect.background = "black";
+		advancedTexture.addControl(this.rect);
 
 		// Create a TextBlock inside the rectangle
-		const text = new TextBlock();
-		text.text = "Point Light Source";
-		text.color = "white";
-		text.fontSize = 20;
-		rect.addControl(text);
+		this.text.text = this.name;
+		this.text.color = "white";
+		this.text.fontSize = 20;
+		this.rect.addControl(this.text);
 
 		// Attach the widget to the light's sphere position
-		rect.linkWithMesh(lightSphere);
-		rect.linkOffsetY = -50; // Position slightly above the light
+		this.rect.linkWithMesh(this.lightSphere);
+		this.rect.linkOffsetY = -50; // Position slightly above the light
+	}
 
-		this.lightSphere = lightSphere;
-		this.rect = rect;
+	override updateObject(path: any[], value: any): void {
+		super.updateObject(path, value);
+
+		switch (path[0]) {
+			case "name":
+				this.lightSphere.name = value + "_lightSphere";
+				
+				this.text.text = value;
+				break;
+			case "position":
+				// Degrees to radians
+				this.setObject.position = this.lightSphere.position = new Vector3(
+					this.position.x,
+					this.position.y,
+					this.position.z
+				);
+				break;
+		}
+	}
+
+	override updateModelFromObject() {
+		const position = this.lightSphere.position;
+		const rotation = this.lightSphere.rotation;
+
+		this.position = {
+			x: position.x,
+			y: position.y,
+			z: position.z
+		};
+
+		// Radians to degrees
+		this.rotation = new Vector3(
+			rotation.x * (180 / Math.PI),
+			rotation.y * (180 / Math.PI),
+			rotation.z * (180 / Math.PI)
+		);
 	}
 
 	remove() {

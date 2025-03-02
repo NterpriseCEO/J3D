@@ -9,7 +9,8 @@ export class PointLight extends LightObject {
 	}
 
 	override initObject() {
-		const light = new Light("pointLight", Vector3.Zero(), this.set.scene);
+		this.name = "Point light";
+		const light = new Light(this.name, Vector3.Zero(), this.set.scene);
 		light.intensity = 0.7;
 
 		this.setObject = light;
