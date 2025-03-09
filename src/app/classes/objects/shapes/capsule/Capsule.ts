@@ -9,6 +9,7 @@ export class Capsule extends SetObject {
 	}
 
 	override initObject() {
-		this.setObject = CreateCapsule("ribbon", {}, this.set.scene);  //scene is
+		this.setObject = CreateCapsule("Capsule", {}, this.set.scene);
+		this.setName("Capsule");
 	}
 }

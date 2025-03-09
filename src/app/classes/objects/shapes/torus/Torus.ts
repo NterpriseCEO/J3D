@@ -9,6 +9,7 @@ export class Torus extends SetObject {
 	}
 
 	override initObject() {
-		this.setObject = CreateTorus("torus", {}, this.set.scene);
+		this.setObject = CreateTorus("Torus", {}, this.set.scene);
+		this.setName("Torus");
 	}
 }

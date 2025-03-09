@@ -9,6 +9,7 @@ export class Plane extends SetObject {
 	}
 
 	override initObject() {
-		this.setObject = CreatePlane("plane", {}, this.set.scene);
+		this.setObject = CreatePlane("Plane", {}, this.set.scene);
+		this.setName("Plane");
 	}
 }

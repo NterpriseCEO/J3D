@@ -53,29 +53,6 @@
 				"y",
 				"z"
 			]
-		},
-		"scale": {
-			"type": "object",
-			"name": "Scale",
-			"properties": {
-				"x": {
-					"name": "X",
-					"type": "number"
-				},
-				"y": {
-					"name": "Y",
-					"type": "number"
-				},
-				"z": {
-					"name": "Z",
-					"type": "number"
-				}
-			},
-			"required": [
-				"x",
-				"y",
-				"z"
-			]
 		}
 	},
 	"required": [

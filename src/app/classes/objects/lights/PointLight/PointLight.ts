@@ -9,12 +9,12 @@ export class PointLight extends LightObject {
 	}
 
 	override initObject() {
-		this.name = "Point light";
-		const light = new Light(this.name, Vector3.Zero(), this.set.scene);
+		const light = new Light("PointLight", Vector3.Zero(), this.set.scene);
 		light.intensity = 0.7;
 
 		this.setObject = light;
 
 		super.initObject();
+		this.setName("PointLight");
 	}
 }

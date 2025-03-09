@@ -1,6 +1,8 @@
 import { Mesh, Vector3 } from "@babylonjs/core";
 import { EnvironmentSet } from "../../EnvironmentSet";
 import { BaseObject } from "../BaseObject";
+import schema from './ObjectSchema.json'
+import { Observable, of } from "rxjs";
 
 export class SetObject extends BaseObject {
 
@@ -9,14 +11,11 @@ export class SetObject extends BaseObject {
 	constructor(set: EnvironmentSet) {
 		super(set);
 		this.initObject();
-		super.initObject();
+		this.mergeProps();
+		console.log(this.schema);
 	}
 
-	remove() {
-		this.setObject.dispose();
-	}
-
-	override updateObject(path: any[], value: any): void {
+	override updateObject(path: any[], value: any): Observable<BaseObject> {
 		super.updateObject(path, value);
 
 		switch (path[0]) {
@@ -43,6 +42,8 @@ export class SetObject extends BaseObject {
 				);
 				break;
 		}
+
+		return of(this);
 	}
 
 	override updateModelFromObject() {
@@ -67,5 +68,19 @@ export class SetObject extends BaseObject {
 			rotation.y * (180 / Math.PI),
 			rotation.z * (180 / Math.PI)
 		);
+	}
+
+	// Generates the merge of the base schema and the crrent obj schema
+	override mergeProps() {
+		this.schema = {
+			properties: {
+				...this.schema.properties,
+				...schema.properties
+			}
+		}
+		this.schema.properties = {
+			...this.schema.properties,
+			...schema.properties
+		}
 	}
 }

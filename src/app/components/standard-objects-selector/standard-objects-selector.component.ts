@@ -28,9 +28,10 @@ export class StandardObjectsSelectorComponent {
 		Sphere,
 		Torus
 	};
+
 	lightTypes: Record<string, any> = {
 		PointLight
-	}
+	};
 
 	constructor(private setService: SetService) {}
 

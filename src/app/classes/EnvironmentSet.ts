@@ -1,6 +1,8 @@
-import { ArcRotateCamera, Engine, GizmoManager, Scene, Vector3 } from "@babylonjs/core";
-import { BehaviorSubject, Subject } from "rxjs";
+import { ArcRotateCamera, Engine, GizmoManager, PointLight, Scene, Vector3 } from "@babylonjs/core";
+import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 import { SetObject } from "./objects/shapes/Object";
+import { BaseObject } from "./objects/BaseObject";
+import { LightObject } from "./objects/lights/Lights";
 
 export class EnvironmentSet {
 
@@ -17,7 +19,7 @@ export class EnvironmentSet {
 	private objectHitDetected: boolean = false;
 	private gizmoManager!: GizmoManager;
 
-	setObjects: any[] = [];
+	setObjects: BaseObject[] = [];
 
 	constructor(canvas: HTMLCanvasElement) {
 		this.canvas = canvas;
@@ -42,13 +44,18 @@ export class EnvironmentSet {
 		this.gizmoManager.scaleGizmoEnabled = true;
 
 		this.gizmoManager.onAttachedToMeshObservable.add(mesh => {
+			let isPointLight = false;
 			this.selectedObjectIndex.next(this.setObjects.findIndex(object => {
 				// Determines which object component name to compare with
-				// name of the click mesh
-				const name = object instanceof SetObject
-					? object.name : object.lightSphere.name;
-				return mesh?.name === name
+				// name of the clicked mesh
+				const name = (object as LightObject)?.lightSphere
+					? (object as LightObject).lightSphere.name : object.name;
+				isPointLight = !!(object as LightObject)?.lightSphere;
+				console.log(isPointLight, typeof object);
+				return mesh?.name === name;
 			}));
+			this.gizmoManager.rotationGizmoEnabled = !isPointLight;
+			this.gizmoManager.scaleGizmoEnabled = !isPointLight;
 		});
 
 		this.gizmoManager.gizmos.positionGizmo?.onDragObservable.add(() => {
@@ -96,24 +103,33 @@ export class EnvironmentSet {
 		const mesh = setObject.lightSphere
 			?? setObject.setObject;
 		
-		this.gizmoManager.attachToMesh(mesh);
 		this.setObjects.push(setObject);
+		this.gizmoManager.attachToMesh(mesh);
 		this.selectedObjectIndex.next(this.setObjects.length-1);
 	}
 
-	updateObjectByName(path: any[], value: any) {
-		this.setObjects.find(object => object.name === path[0]).updateObject(path, value);
+	deleteSelectedObject() {
+		this.setObjects[this.selectedObjectIndex.value].remove();
+		this.deselectObject();
 	}
 
-	updateObjectByID(path: any[], value: any, id: number = this.selectedObjectIndex.value) {
+	updateObjectByName(name: string, path: any[], value: any): Observable<null> {
+		this.setObjects.find(object => object.name === name)?.updateObject(path, value);
+		return of(null);
+	}
+
+	updateObjectByIndex(path: any[], value: any, id: number = this.selectedObjectIndex.value): Observable<BaseObject | null> {
 		if(id === -1) {
-			return;
+			return of(null);
 		}
-		console.log(this.setObjects[id]);
-		this.setObjects[id].updateObject(path, value);
+		const object = this.setObjects[id];
+		object.updateObject(path, value);
+
+		return of(object);
 	}
 
 	deselectObject() {
+		this.selectedObjectIndex.next(-1);
 		this.gizmoManager.attachToMesh(null);
 	}
 }

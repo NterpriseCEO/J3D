@@ -9,6 +9,7 @@ export class Sphere extends SetObject {
 	}
 
 	override initObject() {
-		this.setObject = CreateSphere("sphere", {}, this.set.scene);
+		this.setObject = CreateSphere("Sphere", {}, this.set.scene);
+		this.setName("Sphere");
 	}
 }

@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import schema from "../../classes/objects/ObjectSchema.json";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from "@angular/core";
 import { SetService } from "src/app/services/set.service";
 import { Subscription } from "rxjs";
 
@@ -11,21 +10,29 @@ import { Subscription } from "rxjs";
 })
 export class ObjectEditorComponent implements OnInit, OnDestroy {
 
-	schema: any = schema;
+	@ViewChild('outlet', { read: ViewContainerRef }) outletRef!: ViewContainerRef;
+	@ViewChild('object', { read: TemplateRef }) contentRef!: TemplateRef<any>;
+
+	schema: any;
 	model: any;
 	path: any[] = [];
 	selectedObjectListener!: Subscription;
 
-	constructor(private setService: SetService) {}
+	constructor(
+		private setService: SetService,
+		private changeDetector: ChangeDetectorRef
+	) {}
 
-	ngOnInit(): void {
+	ngOnInit() {
 		this.selectedObjectListener = this.setService.currentSet.selectedObjectIndex.subscribe(i => {
 			if(i === -1) {
 				return;
 			}
-			this.model = this.setService.currentSet.setObjects[i];
+			const object = this.setService.currentSet.setObjects[i];
+			this.schema = object.schema;
+			this.model = object;
 
-			this.path = [this.setService.currentSet.setObjects[i].name];
+			this.path = [object.name];
 		});
 	}
 
@@ -34,18 +41,22 @@ export class ObjectEditorComponent implements OnInit, OnDestroy {
 	}
 
 	updateObject(currentPath: any[], value: any) {
-		this.setService.currentSet.updateObjectByID(currentPath, value)
+		this.setService.currentSet.updateObjectByIndex(currentPath, value);
 	}
 
 	deselectObject() {
 		this.setService.deselectObject();
 	}
 
+	deleteObject() {
+		this.setService.deleteSelectedObject();
+	}
+
 	generatePath(currentPath: any[], property: string) {
 		return [...currentPath, property];
 	}
 
-	ngOnDestroy(): void {
+	ngOnDestroy() {
 		this.selectedObjectListener.unsubscribe();
 	}
 }

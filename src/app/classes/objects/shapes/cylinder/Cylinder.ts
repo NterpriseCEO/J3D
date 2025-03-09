@@ -9,6 +9,7 @@ export class Cylinder extends SetObject {
 	}
 
 	override initObject() {
-		this.setObject = CreateCylinder("cone", {}, this.set.scene);
+		this.setObject = CreateCylinder("Cylinder", {}, this.set.scene);
+		this.setName("Cylinder");
 	}
 }

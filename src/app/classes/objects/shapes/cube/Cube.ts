@@ -9,6 +9,7 @@ export class Cube extends SetObject {
 	}
 
 	override initObject() {
-		this.setObject = CreateBox("box", {}, this.set.scene);
+		this.setObject = CreateBox("Cube", {}, this.set.scene);
+		this.setName("Cube");
 	}
 }

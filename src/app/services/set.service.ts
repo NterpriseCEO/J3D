@@ -35,7 +35,10 @@ export class SetService {
 	}
 
 	deselectObject() {
-		this.currentSet.selectedObjectIndex.next(-1);
 		this.currentSet.deselectObject();
+	}
+
+	deleteSelectedObject() {
+		this.currentSet.deleteSelectedObject();
 	}
 }

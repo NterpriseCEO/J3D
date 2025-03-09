@@ -1,10 +1,11 @@
-import { Vector3 } from "@babylonjs/core";
 import { EnvironmentSet } from "../EnvironmentSet";
-import { LightObject } from "./lights/Lights";
+import schema from "../../classes/objects/BaseObjectSchema.json";
+import { Observable, of } from "rxjs";
 
 export class BaseObject {
 
 	set: EnvironmentSet;
+	schema: any = schema;
 
 	setObject!: any;
 	name: string = "";
@@ -28,24 +29,21 @@ export class BaseObject {
 		this.set = set;
 	}
 
-	initObject() {
-		this.name = this.setObject.name;
-	}
+	initObject() {}
 
-	updateObject(path: any[], value: any) {
-		path = path.slice(1);
+	updateObject(path: any[], value: any): Observable<BaseObject> {
+		path.splice(0, 1);
 		this.setPropertyByPath(this, JSON.parse(JSON.stringify(path)), value);
-
 		// The changed property
 		switch (path[0]) {
 			case "name":
-				this.name = value;
-				this.setObject.name = value;
-				this.setObject.id = value;
+				this.setName(value);
 				break;
 			default:
 				break;
 		}
+
+		return of(this);
 	}
 
 	setPropertyByPath(object: any, path: any[], value: string): any {
@@ -57,5 +55,33 @@ export class BaseObject {
 		}
 	}
 
+	setName(prefix: string): string {
+		// checks if the last character is a number
+		const lastCharacter = parseInt(prefix[prefix.length - 1]);
+		let number = isNaN(lastCharacter) ? 0 : lastCharacter;
+		let newName = prefix;
+		// increments the number at the end until the object name is unique
+		while(this.set.setObjects.find(object => object.name === newName && object !== this)) {
+			number++;
+			// replaces the number at the end if it exists
+			if(!isNaN(lastCharacter)) {
+				prefix = prefix.substring(0, prefix.length-1);
+			}
+			newName = prefix + number;
+		}
+		this.name = newName;
+		this.setObject.name = newName;
+		this.setObject.id = newName;
+
+		return newName;
+	}
+
+	remove() {
+		console.log('hello');
+		this.setObject.dispose();
+	}
+
 	updateModelFromObject() {}
+
+	mergeProps() {}
 }

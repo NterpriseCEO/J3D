@@ -1,0 +1,36 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "",
+	"type": "object",
+	"properties": {
+		"scale": {
+			"type": "object",
+			"name": "Scale",
+			"properties": {
+				"x": {
+					"name": "X",
+					"type": "number"
+				},
+				"y": {
+					"name": "Y",
+					"type": "number"
+				},
+				"z": {
+					"name": "Z",
+					"type": "number"
+				}
+			},
+			"required": [
+				"x",
+				"y",
+				"z"
+			]
+		}
+	},
+	"required": [
+		"name",
+		"position",
+		"scale",
+		"rotation"
+	]
+}

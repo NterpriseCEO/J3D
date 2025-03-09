@@ -2,6 +2,7 @@ import { AdvancedDynamicTexture, Rectangle, TextBlock } from "@babylonjs/gui";
 import { EnvironmentSet } from "../../EnvironmentSet";
 import { Color3, CreateSphere, Mesh, StandardMaterial, Vector3 } from "@babylonjs/core";
 import { BaseObject } from "../BaseObject";
+import { Observable, of } from "rxjs";
 
 export class LightObject extends BaseObject {
 
@@ -13,7 +14,6 @@ export class LightObject extends BaseObject {
 	constructor(set: EnvironmentSet) {
 		super(set);
 		this.initObject();
-		super.initObject();
 	}
 
 	override initObject() {
@@ -27,7 +27,7 @@ export class LightObject extends BaseObject {
 		advancedTexture.renderScale = 1;
 
 		// Create a Rectangle for the label
-		this.rect.width = "200px";
+		this.rect.width = "300px";
 		this.rect.height = "40px";
 		this.rect.cornerRadius = 10;
 		this.rect.color = "White";
@@ -43,17 +43,15 @@ export class LightObject extends BaseObject {
 
 		// Attach the widget to the light's sphere position
 		this.rect.linkWithMesh(this.lightSphere);
-		this.rect.linkOffsetY = -50; // Position slightly above the light
+		this.rect.linkOffsetY = -70; // Position slightly above the light
 	}
 
-	override updateObject(path: any[], value: any): void {
+	override updateObject(path: any[], value: any): Observable<BaseObject> {
 		super.updateObject(path, value);
 
 		switch (path[0]) {
 			case "name":
-				this.lightSphere.name = value + "_lightSphere";
-				
-				this.text.text = value;
+				this.setName(value);
 				break;
 			case "position":
 				// Degrees to radians
@@ -64,6 +62,17 @@ export class LightObject extends BaseObject {
 				);
 				break;
 		}
+
+		return of(this);
+	}
+
+	override setName(prefix: string): string {
+		const newName = super.setName(prefix);
+		this.lightSphere.name = newName + "_lightSphere";
+		this.lightSphere.id = newName + "_lightSphere";
+		this.text.text = newName;
+
+		return newName;
 	}
 
 	override updateModelFromObject() {
@@ -84,7 +93,7 @@ export class LightObject extends BaseObject {
 		);
 	}
 
-	remove() {
+	override remove() {
 		this.setObject.dispose();
 		this.rect.dispose();
 		this.lightSphere.dispose();

@@ -1,4 +1,12 @@
-<div class = "border-bottom-1 surface-border flex flex-row-reverse mb-2 px-2">
+<div class = "border-bottom-1 surface-border flex align-items-center px-2">
+	<span class="w-full font-bold">{{model?.name}}</span>
+	<p-button
+		icon = "pi pi-trash"
+		[rounded] = "true"
+		[text] = "true"
+		severity="danger"
+		(click) = "deleteObject()"
+	/>
 	<p-button
 		icon = "pi pi-times"
 		[rounded] = "true"
@@ -8,6 +16,7 @@
 </div>
 <div class = "px-4">
 	<ng-container
+		#outlet
 		*ngIf = "model"
 		[ngTemplateOutlet] = "object"
 		[ngTemplateOutletContext] = "{
@@ -42,7 +51,7 @@
 					<p-inputnumber
 						class = "block w-full"
 						inputStyleClass = "w-full"
-						[(ngModel)] = "subSchemaModel[getProperty(property).key]"
+						[ngModel] = "subSchemaModel[getProperty(property).key]"
 						(ngModelChange) = "updateObject(fullPath, $event)"
 					/>
 				</ng-container>

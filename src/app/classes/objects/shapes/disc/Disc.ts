@@ -9,6 +9,7 @@ export class Disc extends SetObject {
 	}
 
 	override initObject() {
-		this.setObject = CreateDisc("disc", {}, this.set.scene);
+		this.setObject = CreateDisc("Disc", {}, this.set.scene);
+		this.setName("Disc");
 	}
 }
