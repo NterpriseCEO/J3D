@@ -4,15 +4,25 @@
 	[panelSizes] = "[15, 70, 15]"
 >
 	<ng-template #panel>
-		<p-accordion value = "0" class = "flex flex-column h-full w-full overflow-hidden">
+		<p-accordion
+			value = "1"
+			class = "flex flex-column h-full w-full overflow-hidden"
+			[multiple] = "true"
+		>
 			<p-accordion-panel value = "0">
+				<p-accordion-header>Object tree</p-accordion-header>
+				<p-accordion-content class = "overflow-auto">
+					<app-object-tree class = "block h-full w-full"></app-object-tree>
+				</p-accordion-content>
+			</p-accordion-panel>
+			<p-accordion-panel value = "1">
 				<p-accordion-header>Standard Objects</p-accordion-header>
 				<p-accordion-content class = "overflow-auto">
 					<app-standard-objects-selector class = "block h-full w-full"></app-standard-objects-selector>
 				</p-accordion-content>
 			</p-accordion-panel>
 		
-			<p-accordion-panel value = "1">
+			<p-accordion-panel value = "2">
 				<p-accordion-header>Import Objects</p-accordion-header>
 				<p-accordion-content>
 					<app-object-importer class = "block h-full w-full"></app-object-importer>

@@ -14,3 +14,7 @@
 		padding-bottom: 0.875rem !important;
 	}
 }
+
+.min-w-4 {
+	min-width: calc((100% / 3) - 1rem);
+}

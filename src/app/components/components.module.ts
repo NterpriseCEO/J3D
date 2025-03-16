@@ -13,13 +13,16 @@ import { SceneViewerComponent } from "./scene-viewer/scene-viewer.component";
 import { StandardObjectsSelectorComponent } from "./standard-objects-selector/standard-objects-selector.component";
 import { ObjectEditorComponent } from "./object-editor/object-editor.component";
 import { FormsModule } from "@angular/forms";
+import { ObjectTreeComponent } from "./object-tree/object-tree.component";
+import { TreeModule } from 'primeng/tree';
 
 @NgModule({
 	declarations: [
 		ObjectImporterComponent,
 		SceneViewerComponent,
 		StandardObjectsSelectorComponent,
-		ObjectEditorComponent
+		ObjectEditorComponent,
+		ObjectTreeComponent
 	],
 	imports: [
 		BrowserModule,
@@ -30,13 +33,15 @@ import { FormsModule } from "@angular/forms";
 		TabsModule,
 		InputNumberModule,
 		ButtonModule,
-		FieldsetModule
+		FieldsetModule,
+		TreeModule
 	],
 	exports: [
 		ObjectImporterComponent,
 		SceneViewerComponent,
 		StandardObjectsSelectorComponent,
-		ObjectEditorComponent
+		ObjectEditorComponent,
+		ObjectTreeComponent
 	]
 })
 export class ComponentsModule { }

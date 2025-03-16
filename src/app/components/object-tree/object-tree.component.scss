@@ -1,0 +1,10 @@
+::ng-deep {
+	& .p-tree {
+		height: 100%;
+		padding: 0 !important;
+	}
+
+	& .p-tree-empty-message {
+		height: 100%;
+	}
+}

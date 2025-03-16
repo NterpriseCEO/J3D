@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { EnvironmentSet } from "../classes/EnvironmentSet";
 import { BaseObject } from "../classes/objects/BaseObject";
+import { Subject } from "rxjs";
 
 @Injectable({
 	providedIn: "root"
@@ -8,6 +9,7 @@ import { BaseObject } from "../classes/objects/BaseObject";
 export class SetService {
 
 	sets: EnvironmentSet[] = [];
+	currentSetChange: Subject<any> = new Subject();
 	currentSet!: EnvironmentSet;
 
 	constructor() { }
@@ -16,6 +18,7 @@ export class SetService {
 		const set = new EnvironmentSet(canvas);
 		this.currentSet = set;
 		this.sets.push(set);
+		this.currentSetChange.next(null);
 	}
 
 	addObjectToCurrentSet(setObject: BaseObject) {
@@ -27,11 +30,11 @@ export class SetService {
 	}
 
 	getSetObjects() {
-		return this.currentSet.setObjects;
+		return this.currentSet?.setObjects;
 	}
 
 	selectObjectByName(name: string) {
-		this.currentSet.selectedObjectIndex.next(this.currentSet.setObjects.findIndex(i => i?.name === name));
+		this.currentSet.selectObjectByName(name);
 	}
 
 	deselectObject() {
@@ -40,5 +43,9 @@ export class SetService {
 
 	deleteSelectedObject() {
 		this.currentSet.deleteSelectedObject();
+	}
+
+	deleteObjectByName(name: string) {
+		this.currentSet.deleteObjectByName(name);
 	}
 }

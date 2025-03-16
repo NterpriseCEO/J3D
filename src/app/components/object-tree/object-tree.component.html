@@ -1,0 +1,25 @@
+<p-tree
+	selectionMode = "single"
+	[value] = "objects"
+	styleClass = "w-full"
+	[filter] = "true"
+	filterPlaceholder = "Search existing objects"
+	[(selection)] = "selectedObject"
+	(onNodeSelect) = "selectObject($event)"
+>
+	<ng-template let-node pTemplate = "default">
+        {{ node.label }}
+		<p-button
+			icon = "pi pi-times"
+			[rounded] = "true"
+			[text] = "true"
+			(click) = "deleteObject(node.label, $event)"
+		/>
+    </ng-template>
+
+	<ng-template pTemplate = "empty">
+		<div class = "w-full h-full flex justify-content-center align-items-center">
+			No objects found
+		</div>
+	</ng-template>
+</p-tree>

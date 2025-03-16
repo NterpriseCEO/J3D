@@ -20,12 +20,12 @@ import { SetService } from "src/app/services/set.service";
 export class StandardObjectsSelectorComponent {
 
 	objectTypes: Record<string, any> = {
-		Capsule,
 		Cube,
-		Cylinder,
-		Disc,
-		Plane,
 		Sphere,
+		Cylinder,
+		Plane,
+		Capsule,
+		Disc,
 		Torus
 	};
 

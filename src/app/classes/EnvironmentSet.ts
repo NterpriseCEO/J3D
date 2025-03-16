@@ -10,6 +10,7 @@ export class EnvironmentSet {
 	camera!: ArcRotateCamera;
 	canvas!: HTMLCanvasElement;
 	selectedObjectIndex: BehaviorSubject<number> = new BehaviorSubject(-1);
+	objectListUpdated: Subject<any> = new Subject();
 	objectUpdated: Subject<any> = new Subject();
 
 	private isDragging: boolean = false;
@@ -146,15 +147,38 @@ export class EnvironmentSet {
 		this.setObjects.push(setObject);
 		this.gizmoManager.attachToMesh(mesh);
 		this.selectedObjectIndex.next(this.setObjects.length-1);
+		this.objectListUpdated.next(this.selectedObjectIndex.value);
+	}
+
+	selectObjectByName(name: string) {
+		this.selectedObjectIndex.next(this.setObjects.findIndex(i => i?.name === name));
+		const object = this.setObjects[this.selectedObjectIndex.value];
+
+		const mesh = (object as LightObject)?.lightSphere ?? object.setObject;
+		this.gizmoManager.attachToMesh(mesh);
 	}
 
 	deleteSelectedObject() {
 		this.setObjects[this.selectedObjectIndex.value].remove();
+		this.setObjects.splice(this.selectedObjectIndex.value, 1);
 		this.deselectObject();
+	}
+
+	deleteObjectByName(name: string) {
+		const index = this.setObjects.findIndex(object => object.name === name);
+		const selectedObjectName = this.setObjects[this.selectedObjectIndex.value]?.name;
+		if(index === this.selectedObjectIndex.value) {
+			this.deselectObject();
+		}
+		this.setObjects[index]?.remove();
+		this.setObjects.splice(index, 1);
+		this.selectedObjectIndex.next(this.setObjects.findIndex(i => i?.name === selectedObjectName))
+		this.objectListUpdated.next(this.selectedObjectIndex.value);
 	}
 
 	updateObjectByName(name: string, path: any[], value: any): Observable<null> {
 		this.setObjects.find(object => object.name === name)?.updateObject(path, value);
+		this.objectListUpdated.next(this.selectedObjectIndex.value);
 		return of(null);
 	}
 
@@ -164,12 +188,13 @@ export class EnvironmentSet {
 		}
 		const object = this.setObjects[id];
 		object.updateObject(path, value);
-
+		this.objectListUpdated.next(null);
 		return of(object);
 	}
 
 	deselectObject() {
 		this.selectedObjectIndex.next(-1);
+		this.objectListUpdated.next(null);
 		this.gizmoManager.attachToMesh(null);
 	}
 
